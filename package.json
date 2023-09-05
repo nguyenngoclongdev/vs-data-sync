@@ -1,0 +1,376 @@
+{
+    "name": "data-sync",
+    "displayName": "Data Sync",
+    "description": "Compares two databases, local or remote, and automatically generates a migration file of the differences.",
+    "icon": "assets/logo.png",
+    "pricing": "Trial",
+    "version": "1.0.17",
+    "main": "./dist/extension.js",
+    "browser": "./dist/web/extension.js",
+    "preview": false,
+    "qna": "marketplace",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nguyenngoclongdev/vs-data-sync"
+    },
+    "bugs": {
+        "url": "https://github.com/nguyenngoclongdev/vs-data-sync/issues"
+    },
+    "sponsor": {
+        "url": "https://ko-fi.com/nguyenngoclong"
+    },
+    "homepage": "https://nguyenngoclongdev.github.io",
+    "galleryBanner": {
+        "color": "#11131C",
+        "theme": "dark"
+    },
+    "badges": [
+        {
+            "url": "https://img.shields.io/badge/Support%20this%20project-%F0%9F%92%96-green.svg?style=flat-square",
+            "href": "https://ko-fi.com/nguyenngoclong",
+            "description": "Support us!"
+        }
+    ],
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "database",
+        "management",
+        "sync",
+        "postgresql"
+    ],
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "data-sync-activity-bar",
+                    "title": "Data Sync",
+                    "icon": "assets/logo.svg"
+                }
+            ]
+        },
+        "views": {
+            "data-sync-activity-bar": [
+                {
+                    "id": "data-sync-info",
+                    "name": "Info"
+                },
+                {
+                    "id": "data-sync-compare",
+                    "name": "Compare"
+                },
+                {
+                    "id": "data-sync-migrate",
+                    "name": "Migrate"
+                }
+            ]
+        },
+        "viewsWelcome": [
+            {
+                "view": "data-sync-info",
+                "contents": "Welcome to Data Sync for Visual Studio Code.\nLet's start by generating configuration:\n[Generate Configuration](command:data-sync.generate-config)\nTo learn more about how to sync data in VS Code [read our docs!](https://github.com/nguyenngoclongdev/data-sync/)"
+            },
+            {
+                "view": "data-sync-compare",
+                "contents": "No compare files created yet."
+            },
+            {
+                "view": "data-sync-migrate",
+                "contents": "No migrate files created yet."
+            }
+        ],
+        "commands": [
+            {
+                "command": "data-sync.generate-config",
+                "category": "Data Sync",
+                "title": "Generate Configuration File"
+            },
+            {
+                "command": "data-sync.show-config",
+                "category": "Data Sync",
+                "title": "Show Configuration",
+                "icon": "$(gear)"
+            },
+            {
+                "command": "data-sync.import-analyze-data",
+                "title": "Import Previous Analyze Data",
+                "icon": "$(notebook-kernel-select)"
+            },
+            {
+                "command": "data-sync.process-info",
+                "title": "View Process Info",
+                "icon": "$(server-process)"
+            },
+            {
+                "command": "data-sync.refresh-info",
+                "title": "Refresh",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "data-sync.refresh-compare",
+                "title": "Refresh",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "data-sync.refresh-migrate",
+                "title": "Refresh",
+                "icon": "$(refresh)"
+            },
+            {
+                "command": "data-sync.analyze-data",
+                "title": "Analyze Data",
+                "icon": "$(pulse)"
+            },
+            {
+                "command": "data-sync.open-original-file",
+                "title": "Open Original File",
+                "icon": "$(go-to-file)"
+            },
+            {
+                "command": "data-sync.open-modified-file",
+                "title": "Open Modified File",
+                "icon": "$(go-to-file)"
+            },
+            {
+                "command": "data-sync.inline-diff",
+                "title": "Inline Diff",
+                "icon": "$(diff)"
+            },
+            {
+                "command": "data-sync.side-by-side-diff",
+                "title": "Side By Side Diff",
+                "icon": "$(diff)"
+            },
+            {
+                "command": "data-sync.view-migrate-plan",
+                "title": "View Migrate Plan",
+                "icon": "$(preferences-open-settings)"
+            },
+            {
+                "command": "data-sync.execute-migrate",
+                "title": "Execute Migrate",
+                "icon": "$(play)"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "data-sync.import-analyze-data",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.process-info",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.refresh-info",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.refresh-compare",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.refresh-migrate",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.analyze-data",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.open-original-file",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.open-modified-file",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.inline-diff",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.side-by-side-diff",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.view-migrate-plan",
+                    "when": "false"
+                },
+                {
+                    "command": "data-sync.execute-migrate",
+                    "when": "false"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "data-sync.import-analyze-data",
+                    "when": "view == data-sync-info",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "data-sync.process-info",
+                    "when": "view == data-sync-info",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "data-sync.show-config",
+                    "when": "view == data-sync-info",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "data-sync.refresh-info",
+                    "when": "view == data-sync-info",
+                    "group": "navigation@4"
+                },
+                {
+                    "command": "data-sync.refresh-compare",
+                    "when": "view == data-sync-compare",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "data-sync.refresh-migrate",
+                    "when": "view == data-sync-migrate",
+                    "group": "navigation@1"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "data-sync.analyze-data",
+                    "when": "view == data-sync-info && viewItem == pattern-context",
+                    "group": "inline@1"
+                },
+                {
+                    "command": "data-sync.side-by-side-diff",
+                    "when": "view == data-sync-compare && viewItem == compare-context",
+                    "group": "inline@1"
+                },
+                {
+                    "command": "data-sync.inline-diff",
+                    "when": "view == data-sync-compare && viewItem == compare-context",
+                    "group": "compare@1"
+                },
+                {
+                    "command": "data-sync.open-original-file",
+                    "when": "view == data-sync-compare && viewItem == compare-context",
+                    "group": "compare@2"
+                },
+                {
+                    "command": "data-sync.open-modified-file",
+                    "when": "view == data-sync-compare && viewItem == compare-context",
+                    "group": "compare@3"
+                },
+                {
+                    "command": "data-sync.view-migrate-plan",
+                    "when": "view == data-sync-migrate && viewItem == migrate-context",
+                    "group": "inline@1"
+                },
+                {
+                    "command": "data-sync.execute-migrate",
+                    "when": "view == data-sync-migrate && viewItem == migrate-context",
+                    "group": "inline@2"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Configuration File Path",
+            "properties": {
+                "data-sync.configFilePath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Specifies the configuration file path."
+                },
+                "data-sync.outputDirPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Specifies the output directory path."
+                },
+                "data-sync.showOutputPanel": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show output panel when analyzing data or migrating data."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run vscode-desktop:publish && npm run vscode-web:publish",
+        "vscode-desktop:publish": "npm run esbuild-base -- --minify",
+        "vscode-web:publish": "npm run compile-web -- --mode production --devtool false",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+        "esbuild": "npm run esbuild-base -- --sourcemap",
+        "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "lint": "eslint src --ext ts",
+        "cs": "changeset",
+        "pree2e": "code --uninstall-extension nguyenngoclong.data-sync || true",
+        "e2e": "vsce package -o ./data-sync.vsix",
+        "poste2e": "code --install-extension ./data-sync.vsix",
+        "compile-web": "webpack",
+        "watch-web": "webpack --watch",
+        "esbuild-test": "esbuild ./src/__test__/*.ts ./src/__test__/**/*.ts --outdir=./dist/__test__ --format=cjs --platform=node",
+        "clean-test": "rm -rf src/__test__/fixtures/*.ts",
+        "pretest": "npm run clean-test && npm run esbuild && npm run esbuild-test",
+        "test": "node ./dist/__test__/runTest.js",
+        "posttest": "rm -rf .vscode-test/user-data"
+    },
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "devDependencies": {
+        "@changesets/cli": "^2.26.1",
+        "@types/diff": "^5.0.3",
+        "@types/fs-extra": "^11.0.1",
+        "@types/glob": "^8.1.0",
+        "@types/lodash.groupby": "^4.6.7",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^20.2.5",
+        "@types/pg": "^8.10.2",
+        "@types/pg-promise": "^5.4.3",
+        "@types/pg-query-stream": "^3.4.0",
+        "@types/vscode": "^1.64.0",
+        "@types/webpack-env": "^1.18.1",
+        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "@typescript-eslint/parser": "^6.0.0",
+        "@vscode/test-electron": "^2.3.2",
+        "assert": "^2.0.0",
+        "buffer": "^6.0.3",
+        "constants-browserify": "^1.0.0",
+        "crypto-browserify": "^3.12.0",
+        "esbuild": "^0.17.19",
+        "eslint": "^8.45.0",
+        "glob": "^10.2.6",
+        "mocha": "^10.2.0",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
+        "process": "^0.11.10",
+        "stream-browserify": "^3.0.0",
+        "ts-loader": "^9.4.3",
+        "typescript": "^5.0.4",
+        "webpack": "^5.84.1",
+        "webpack-cli": "^5.1.1"
+    },
+    "dependencies": {
+        "@types/chance": "^1.1.3",
+        "chance": "^1.1.11",
+        "dayjs": "^1.11.9",
+        "diff": "^5.1.0",
+        "fs-extra": "^11.1.1",
+        "lodash.groupby": "^4.6.0",
+        "pg": "^8.11.1",
+        "pg-iterator": "^0.3.0",
+        "pg-promise": "^11.5.0"
+    },
+    "author": {
+        "name": "Nguyen Ngoc Long",
+        "url": "https://nguyenngoclongdev.github.io"
+    },
+    "publisher": "nguyenngoclong",
+    "license": "MIT"
+}
