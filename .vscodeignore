@@ -1,0 +1,16 @@
+.changeset
+.github
+.vscode
+dist/__test__
+.vscode-test/**
+node_modules
+src/
+.eslintrc.json
+.gitignore
+.npmrc
+.vscodeignore
+package-lock.json
+*.vsix
+dist/**/*.map
+tsconfig.json
+webpack.config.json
