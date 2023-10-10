@@ -69,7 +69,7 @@
         "viewsWelcome": [
             {
                 "view": "data-sync-info",
-                "contents": "Welcome to Data Sync for Visual Studio Code.\nLet's start by generating configuration:\n[Generate Configuration](command:data-sync.generate-config)\nTo learn more about how to sync data in VS Code [read our docs!](https://github.com/nguyenngoclongdev/data-sync/)"
+                "contents": "Welcome to Data Sync for Visual Studio Code.\nLet's start by generating configuration:\n[Generate Configuration](command:data-sync.generate-config)\nTo learn more about how to sync data in VS Code [read our docs!](https://github.com/nguyenngoclongdev/vs-data-sync/)"
             },
             {
                 "view": "data-sync-compare",
