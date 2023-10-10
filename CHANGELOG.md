@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.19
+
+### Patch Changes
+
+- b94f7b6: update document url
+
 ## 1.0.18
 
 ### Patch Changes
