@@ -4,7 +4,7 @@
     "description": "Compares two databases, local or remote, and automatically generates a migration file of the differences.",
     "icon": "assets/logo.png",
     "pricing": "Trial",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "main": "./dist/extension.js",
     "browser": "./dist/web/extension.js",
     "preview": false,

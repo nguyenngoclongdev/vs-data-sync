@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.18
+
+### Patch Changes
+
+- 955e754: update docs url
+
 ## 1.0.17
 
 ### Patch Changes
