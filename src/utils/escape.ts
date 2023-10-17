@@ -24,30 +24,24 @@ export const escape = (value: any) => {
                 // - 'abc \n def' => CONCAT('abc', chr(10), 'def')
                 // - '\n abc \n def' => CONCAT(chr(10), 'abc', chr(10), 'def')
                 // - '\n abc \n def \n' => CONCAT(chr(10), 'abc', chr(10), 'def', chr(10))
-                const split = withoutSingleQuote.split(EOL).map((current, index, array) => {
+                const split = withoutSingleQuote.split(EOL).map((currentValue, currentIndex, array) => {
+                    const isEmpty = currentValue === null || currentValue === undefined || currentValue === '';
+
                     // If first item is empty => new line (after split) => transform to chr(10)
                     // Otherwise, it is normal text
-                    if (index === 0) {
-                        if (!current) {
-                            return `chr(10)`;
-                        } else {
-                            return `'${current}', chr(10)`;
-                        }
+                    if (currentIndex === 0) {
+                        return isEmpty ? `chr(10)` : `'${currentValue}', chr(10)`;
                     }
 
                     // If last item is empty => new line (after split) => transform to chr(10)
                     // Otherwise, it is normal text (return without include chr(10))
-                    if (index === array.length - 1) {
-                        if (!current) {
-                            return `chr(10)`;
-                        } else {
-                            return `'${current}'`;
-                        }
+                    if (currentIndex === array.length - 1) {
+                        return isEmpty ? '' : `'${currentValue}'`;
                     }
 
                     // The item array (not first/last), add chr(10)
-                    return `'${current}', chr(10)`;
-                });
+                    return isEmpty ? `chr(10)` : `'${currentValue}', chr(10)`;
+                }).filter(Boolean);
                 return `CONCAT(${split.join(', ')})`;
             }
             return escapeText;
