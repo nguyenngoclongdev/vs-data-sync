@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.20
+
+### Patch Changes
+
+- 455d364: generate multiple break line
+
 ## 1.0.19
 
 ### Patch Changes
