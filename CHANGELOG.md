@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.22
+
+### Patch Changes
+
+- f3246d6: check db connection before create snapshot and migrate
+
 ## 1.0.21
 
 ### Patch Changes
