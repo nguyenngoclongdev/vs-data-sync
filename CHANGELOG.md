@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.24
+
+### Patch Changes
+
+- 7ee1a63: add option to disable validate database connection
+
 ## 1.0.23
 
 ### Patch Changes
