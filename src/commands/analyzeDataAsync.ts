@@ -154,7 +154,7 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 // Check the source database connection config
                 showProgressReport(progress, 'Try connecting to the source database...');
                 const sourceInfo = getDatabaseInfo(pattern.source);
-                const isSourceReady = tryConnectionAsync(pattern.source);
+                const isSourceReady = await tryConnectionAsync(pattern.source);
                 if (!isSourceReady) {
                     showProgressWarn(`Failed to connect source database ${sourceInfo}.`);
                     return false;
@@ -164,7 +164,7 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 // Check the target database connection config
                 showProgressReport(progress, 'Try connecting to the target database...');
                 const targetInfo = getDatabaseInfo(pattern.target);
-                const isTargetReady = tryConnectionAsync(pattern.target);
+                const isTargetReady = await tryConnectionAsync(pattern.target);
                 if (!isTargetReady) {
                     showProgressWarn(`Failed to connect target database ${targetInfo}.`);
                     return false;
