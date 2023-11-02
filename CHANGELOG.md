@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.21
+
+### Patch Changes
+
+- 4deb5ee: check db connection before create snapshot and migrate
+
 ## 1.0.20
 
 ### Patch Changes
