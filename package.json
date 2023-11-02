@@ -275,7 +275,7 @@
             ]
         },
         "configuration": {
-            "title": "Configuration File Path",
+            "title": "Data Sync",
             "properties": {
                 "data-sync.configFilePath": {
                     "type": "string",
