@@ -291,6 +291,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Show output panel when analyzing data or migrating data."
+                },
+                "data-sync.checkDatabaseConnection": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Check the database connection when analyzing data or migrating data."
                 }
             }
         }

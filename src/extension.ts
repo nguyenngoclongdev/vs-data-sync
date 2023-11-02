@@ -18,6 +18,7 @@ export interface ExtensionConfiguration extends WorkspaceConfiguration {
     configFilePath?: string;
     outputDirPath?: string;
     showOutputPanel?: boolean;
+    checkDatabaseConnection?: boolean;
 }
 
 export async function activate(context: ExtensionContext) {

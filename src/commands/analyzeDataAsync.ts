@@ -168,27 +168,31 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 }
 
                 // Check the source database connection config
-                showProgressReport(progress, 'Try connecting to the source database...');
-                const sourceInfo = getDatabaseInfo(pattern.source);
-                const isSourceReady = await tryConnectionAsync(pattern.source);
-                if (!isSourceReady) {
-                    showProgressWarn(`Failed to connect source database ${sourceInfo}.`);
-                    return false;
+                if (config.checkDatabaseConnection) {
+                    showProgressReport(progress, 'Try connecting to the source database...');
+                    const sourceInfo = getDatabaseInfo(pattern.source);
+                    const isSourceReady = await tryConnectionAsync(pattern.source);
+                    if (!isSourceReady) {
+                        showProgressWarn(`Failed to connect source database ${sourceInfo}.`);
+                        return false;
+                    }
+                    showProgressReport(progress, 'Connect to the source database was successfully!');
                 }
-                showProgressReport(progress, 'Connect to the source database was successfully!');
 
                 // Store the password if connect successful
                 store.sourcePassword = pattern.source.password.toString();
 
                 // Check the target database connection config
-                showProgressReport(progress, 'Try connecting to the target database...');
-                const targetInfo = getDatabaseInfo(pattern.target);
-                const isTargetReady = await tryConnectionAsync(pattern.target);
-                if (!isTargetReady) {
-                    showProgressWarn(`Failed to connect target database ${targetInfo}.`);
-                    return false;
+                if (config.checkDatabaseConnection) {
+                    showProgressReport(progress, 'Try connecting to the target database...');
+                    const targetInfo = getDatabaseInfo(pattern.target);
+                    const isTargetReady = await tryConnectionAsync(pattern.target);
+                    if (!isTargetReady) {
+                        showProgressWarn(`Failed to connect target database ${targetInfo}.`);
+                        return false;
+                    }
+                    showProgressReport(progress, 'Connect to the target database was successfully!');
                 }
-                showProgressReport(progress, 'Connect to the target database was successfully!');
 
                 // Store the password if connect successful
                 store.targetPassword = pattern.target.password.toString();

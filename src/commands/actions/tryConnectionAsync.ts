@@ -17,7 +17,9 @@ export const tryConnectionAsync = async (poolConfig: PoolConfig): Promise<boolea
         });
         await client.connect();
 
-        logger.info(`Connecting to the '${getDatabaseInfo(poolConfig)}' successful.`);
+        // Get current version
+        const versionRes = await client.query(`SELECT current_setting('server_version_num') as ver_num;`);
+        logger.info(`Connecting to the '${getDatabaseInfo(poolConfig)}' successful. Run on pg version ${versionRes}.`);
         return true;
     } catch (err) {
         logger.info(`Could not connect to the '${getDatabaseInfo(poolConfig)}'.`, err);
