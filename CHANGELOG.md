@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.23
+
+### Patch Changes
+
+- 06a4aec: input db password before check connection
+
 ## 1.0.22
 
 ### Patch Changes
