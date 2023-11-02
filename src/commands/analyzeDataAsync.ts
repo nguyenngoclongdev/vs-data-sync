@@ -9,7 +9,7 @@ import { logger } from '../utils/logger';
 import { showIncorrectConfigWarning, showIsAnalyzingWarning, showNoConfigWarning } from '../utils/notification';
 import { showProgressReport, showProgressSuccess, showProgressWarn } from '../utils/progress';
 import { store } from '../utils/store';
-import { getDatabaseInfo, getMigrationDirs, showErrorMessageWithDetail } from '../utils/utils';
+import { getDatabaseInfo, getMigrationDirs, showErrorMessageWithDetail, showInputPassword } from '../utils/utils';
 import { generateDiffAsync } from './actions/generateDiffAsync';
 import { generateMigrateAsync } from './actions/generateMigrateAsync';
 import { generatePlanAsync } from './actions/generatePlanAsync';
@@ -151,6 +151,22 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 cancellable: true
             },
             async (progress) => {
+                // Show password input if not defined
+                if (pattern.source.password === undefined) {
+                    const inputPassword = await showInputPassword('source', pattern.source);
+                    if (typeof inputPassword === 'undefined') {
+                        return false;
+                    }
+                    pattern.source.password = inputPassword;
+                }
+                if (pattern.target.password === undefined) {
+                    const inputPassword = await showInputPassword('target', pattern.target);
+                    if (typeof inputPassword === 'undefined') {
+                        return false;
+                    }
+                    pattern.target.password = inputPassword;
+                }
+
                 // Check the source database connection config
                 showProgressReport(progress, 'Try connecting to the source database...');
                 const sourceInfo = getDatabaseInfo(pattern.source);
@@ -161,6 +177,9 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 }
                 showProgressReport(progress, 'Connect to the source database was successfully!');
 
+                // Store the password if connect successful
+                store.sourcePassword = pattern.source.password.toString();
+
                 // Check the target database connection config
                 showProgressReport(progress, 'Try connecting to the target database...');
                 const targetInfo = getDatabaseInfo(pattern.target);
@@ -170,6 +189,9 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                     return false;
                 }
                 showProgressReport(progress, 'Connect to the target database was successfully!');
+
+                // Store the password if connect successful
+                store.targetPassword = pattern.target.password.toString();
 
                 // Generate snapshot files (read database and output to file)
                 showProgressReport(progress, 'Generating all snapshot files...');

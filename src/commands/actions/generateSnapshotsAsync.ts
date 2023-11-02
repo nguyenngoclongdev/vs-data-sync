@@ -4,15 +4,7 @@ import pg from 'pg';
 import { QueryIterablePool } from 'pg-iterator';
 import { FileManager, SnapshotType } from '../../utils/fileManager';
 import { logger } from '../../utils/logger';
-import {
-    PatternConfig,
-    PatternSession,
-    TableConfig,
-    getDatabaseInfo,
-    getTabWidth,
-    showInputPassword
-} from '../../utils/utils';
-import { store } from '../../utils/store';
+import { PatternConfig, PatternSession, TableConfig, getDatabaseInfo, getTabWidth } from '../../utils/utils';
 
 const getPrimaryKeys = async (options: { pool: pg.Pool; table: TableConfig }): Promise<string[]> => {
     const { pool, table } = options;
@@ -157,22 +149,6 @@ export const generateSnapshotAsync = async (options: {
         plan: {}
     };
 
-    // Show password input if not defined
-    if (source.password === undefined) {
-        const inputPassword = await showInputPassword('source', source);
-        if (typeof inputPassword === 'undefined') {
-            return false;
-        }
-        source.password = inputPassword;
-    }
-    if (target.password === undefined) {
-        const inputPassword = await showInputPassword('target', target);
-        if (typeof inputPassword === 'undefined') {
-            return false;
-        }
-        target.password = inputPassword;
-    }
-
     // Generate snapshot for original database (target apply)
     const targetPool = new pg.Pool(target);
     logger.info(`Generating target snapshot with db connection '${getDatabaseInfo(target)}'....`);
@@ -198,9 +174,5 @@ export const generateSnapshotAsync = async (options: {
         tables
     });
     logger.info('The source snapshot files was successfully generated');
-
-    // Set password to store
-    store.sourcePassword = source.password.toString();
-    store.targetPassword = target.password.toString();
     return true;
 };
