@@ -9,11 +9,12 @@ import { logger } from '../utils/logger';
 import { showIncorrectConfigWarning, showIsAnalyzingWarning, showNoConfigWarning } from '../utils/notification';
 import { showProgressReport, showProgressSuccess, showProgressWarn } from '../utils/progress';
 import { store } from '../utils/store';
-import { getMigrationDirs, showErrorMessageWithDetail } from '../utils/utils';
+import { getDatabaseInfo, getMigrationDirs, showErrorMessageWithDetail } from '../utils/utils';
 import { generateDiffAsync } from './actions/generateDiffAsync';
 import { generateMigrateAsync } from './actions/generateMigrateAsync';
 import { generatePlanAsync } from './actions/generatePlanAsync';
 import { generateSnapshotAsync } from './actions/generateSnapshotsAsync';
+import { tryConnectionAsync } from './actions/tryConnectionAsync';
 
 const genMigrateName = (pattern: string, migrationNameInput: string) => {
     const executeAt = dayjs().format('YYYY-MM-DD');
@@ -150,6 +151,26 @@ export const analyzeDataAsync = async (selectedPattern: string): Promise<void> =
                 cancellable: true
             },
             async (progress) => {
+                // Check the source database connection config
+                showProgressReport(progress, 'Try connecting to the source database...');
+                const sourceInfo = getDatabaseInfo(pattern.source);
+                const isSourceReady = tryConnectionAsync(pattern.source);
+                if (!isSourceReady) {
+                    showProgressWarn(`Failed to connect source database ${sourceInfo}.`);
+                    return false;
+                }
+                showProgressReport(progress, 'Connect to the source database was successfully!');
+
+                // Check the target database connection config
+                showProgressReport(progress, 'Try connecting to the target database...');
+                const targetInfo = getDatabaseInfo(pattern.target);
+                const isTargetReady = tryConnectionAsync(pattern.target);
+                if (!isTargetReady) {
+                    showProgressWarn(`Failed to connect target database ${targetInfo}.`);
+                    return false;
+                }
+                showProgressReport(progress, 'Connect to the target database was successfully!');
+
                 // Generate snapshot files (read database and output to file)
                 showProgressReport(progress, 'Generating all snapshot files...');
                 const isGenerateSnapshotSuccess = await generateSnapshotAsync({

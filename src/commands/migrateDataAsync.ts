@@ -9,7 +9,7 @@ import { APP_ID, APP_NAME, constants } from '../utils/constants';
 import { FileManager } from '../utils/fileManager';
 import { logger } from '../utils/logger';
 import { showIsAnalyzingWarning, showNoConfigWarning, showNoPatternWarning } from '../utils/notification';
-import { showProgressReport, showProgressSuccess } from '../utils/progress';
+import { showProgressReport, showProgressSuccess, showProgressWarn } from '../utils/progress';
 import { isDeleteQuery, isInsertQuery, isUpdateQuery } from '../utils/query';
 import { store } from '../utils/store';
 import {
@@ -21,6 +21,7 @@ import {
     showErrorMessageWithDetail,
     showInputPassword
 } from '../utils/utils';
+import { tryConnectionAsync } from './actions/tryConnectionAsync';
 
 const handleWarningQueries = (
     warnQueries: { rawQuery: string; affected: number }[],
@@ -236,6 +237,26 @@ export const migrateDataAsync = async (migrateFilePath: string): Promise<void> =
                 cancellable: true
             },
             async (progress): Promise<boolean> => {
+                // Check the source database connection config
+                showProgressReport(progress, 'Try connecting to the source database...');
+                const sourceInfo = getDatabaseInfo(pattern.source);
+                const isSourceReady = tryConnectionAsync(pattern.source);
+                if (!isSourceReady) {
+                    showProgressWarn(`Failed to connect source database ${sourceInfo}.`);
+                    return false;
+                }
+                showProgressReport(progress, 'Connect to the source database was successfully!');
+
+                // Check the target database connection config
+                showProgressReport(progress, 'Try connecting to the target database...');
+                const targetInfo = getDatabaseInfo(pattern.target);
+                const isTargetReady = tryConnectionAsync(pattern.target);
+                if (!isTargetReady) {
+                    showProgressWarn(`Failed to connect target database ${targetInfo}.`);
+                    return false;
+                }
+                showProgressReport(progress, 'Connect to the target database was successfully!');
+
                 // Execute migrate
                 showProgressReport(progress, `Starting migrate data...`);
                 logger.info(`Migrate to target with db connection '${getDatabaseInfo(pattern.target)}'....`);
