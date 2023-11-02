@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.25
+
+### Patch Changes
+
+- 0c6361f: change configuration title and remove get pg version
+
 ## 1.0.24
 
 ### Patch Changes
