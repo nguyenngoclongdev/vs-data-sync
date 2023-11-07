@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.26
+
+### Patch Changes
+
+- 1c8fb87: fix: remove check the source database connection config on migrate time
+
 ## 1.0.25
 
 ### Patch Changes
