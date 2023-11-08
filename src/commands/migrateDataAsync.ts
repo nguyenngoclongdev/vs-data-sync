@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
 import fs from 'fs-extra';
-import { EOL, arch, networkInterfaces, userInfo } from 'node:os';
+import { EOL } from 'node:os';
 import pg, { PoolConfig } from 'pg';
 import { ProgressLocation, QuickPickItem, window, workspace } from 'vscode';
 import { ExtensionConfiguration } from '../extension';
@@ -12,6 +11,7 @@ import { showIsAnalyzingWarning, showNoConfigWarning, showNoPatternWarning } fro
 import { showProgressReport, showProgressSuccess, showProgressWarn } from '../utils/progress';
 import { isDeleteQuery, isInsertQuery, isUpdateQuery } from '../utils/query';
 import { store } from '../utils/store';
+import { SystemInfo } from '../utils/systemInfo';
 import {
     MigrateConfig,
     PatternSession,
@@ -142,23 +142,11 @@ export const executeMigrate = async (options: {
     }
 };
 
-const getSystemInfo = (): { [key: string]: string } => {
-    const { eno1 } = networkInterfaces();
-    const localIp = eno1?.[0].address;
-    const executedAt = dayjs().format('YYYY-MM-DD HH:MM:ss');
-    return {
-        cpu: arch(),
-        ip: localIp || '',
-        executedBy: userInfo().username,
-        executedAt: executedAt
-    };
-};
-
 /**
  * Migrate all changes to target database
  * - migrations/<migrate-name>/session.json
  */
-export const migrateDataAsync = async (migrateFilePath: string): Promise<void> => {
+export const migrateDataAsync = async (migrateFilePath: string, systemInfo?: SystemInfo): Promise<void> => {
     try {
         // Check the process is analyzing
         if (store.isAnalyzing) {
@@ -277,7 +265,7 @@ export const migrateDataAsync = async (migrateFilePath: string): Promise<void> =
                 const sessionPath = fileManager.getSessionPath();
                 const session: PatternSession = await fs.readJson(sessionPath);
                 session.selectedPattern = store.currentPattern;
-                session.system = getSystemInfo();
+                session.system = systemInfo;
                 session.migrate = {
                     status: 'Success',
                     affected: rowAffected

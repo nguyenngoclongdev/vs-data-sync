@@ -4,6 +4,7 @@ import { PoolConfig } from 'pg';
 import { Uri, window, workspace } from 'vscode';
 import { constants } from './constants';
 import { logger } from './logger';
+import { SystemInfo } from './systemInfo';
 
 export type TableDetail = {
     primaryKeys: string[];
@@ -26,9 +27,7 @@ export type PatternSession = {
     plan: {
         [table: string]: TableDetail;
     };
-    system?: {
-        [key: string]: string;
-    };
+    system?: SystemInfo;
 };
 
 export type TableConfig = {

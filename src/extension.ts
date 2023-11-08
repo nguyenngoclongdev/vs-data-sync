@@ -12,6 +12,7 @@ import { APP_ID, extCommands } from './utils/constants';
 import { FileManager } from './utils/fileManager';
 import { logger } from './utils/logger';
 import { store } from './utils/store';
+import { getSystemInfo } from './utils/systemInfo';
 import { showTextDocument } from './utils/utils';
 
 export interface ExtensionConfiguration extends WorkspaceConfiguration {
@@ -136,7 +137,8 @@ export async function activate(context: ExtensionContext) {
         commands.registerCommand(extCommands.executeMigrate, async (treeItem: MigrateTreeItem) => {
             logger.info(`Click on migrate tree item '${treeItem.fileName}'`);
             if (treeItem.filePath) {
-                await migrateDataAsync(treeItem.filePath);
+                const systemInfo = getSystemInfo(context);
+                await migrateDataAsync(treeItem.filePath, systemInfo);
             }
         })
     );
