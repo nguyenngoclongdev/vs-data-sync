@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.27
+
+### Patch Changes
+
+- ec35edb: append the version of vscode and extension on migrate time
+
 ## 1.0.26
 
 ### Patch Changes
