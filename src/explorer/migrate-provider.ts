@@ -5,6 +5,7 @@ import { Event, EventEmitter, ThemeIcon, TreeDataProvider, TreeItem, TreeItemCol
 import { analyzeDataOnRefreshAsync } from '../commands/analyzeDataOnRefreshAsync';
 import { FileManager } from '../utils/fileManager';
 import { store } from '../utils/store';
+import { extCommands } from '../utils/constants';
 
 export type MigrateTreeItem = TreeItem & {
     type?: 'all' | 'each';
@@ -120,7 +121,7 @@ export class MigrateProvider implements TreeDataProvider<MigrateTreeItem> {
         [insertItem, updateItem, deleteItem].forEach((item) => {
             const filePath = item.filePath;
             const fileName = path.basename(filePath);
-            treeItems.push({
+            const treeItem: MigrateTreeItem = {
                 // Built-in field
                 id: `${parentItem.id}/${fileName}`,
                 label: fileName,
@@ -134,7 +135,13 @@ export class MigrateProvider implements TreeDataProvider<MigrateTreeItem> {
                 filePath,
                 fileName,
                 parent: parentItem
-            });
+            };
+            treeItem.command = {
+                title: `View the migrate file '${treeItem.fileName}'`,
+                command: extCommands.viewMigratePlan,
+                arguments: [treeItem]
+            };
+            treeItems.push(treeItem);
         });
         return treeItems;
     };

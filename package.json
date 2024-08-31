@@ -17,7 +17,7 @@
         "url": "https://github.com/nguyenngoclongdev/vs-data-sync/issues"
     },
     "sponsor": {
-        "url": "https://ko-fi.com/nguyenngoclong"
+        "url": "https://github.com/sponsors/nguyenngoclongdev"
     },
     "homepage": "https://nguyenngoclongdev.github.io",
     "galleryBanner": {
@@ -27,7 +27,7 @@
     "badges": [
         {
             "url": "https://img.shields.io/badge/Support%20this%20project-%F0%9F%92%96-green.svg?style=flat-square",
-            "href": "https://ko-fi.com/nguyenngoclong",
+            "href": "https://github.com/sponsors/nguyenngoclongdev",
             "description": "Support us!"
         }
     ],

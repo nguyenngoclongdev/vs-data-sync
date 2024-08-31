@@ -6,6 +6,7 @@ import { ConfigManager } from '../utils/configManager';
 import { FileManager } from '../utils/fileManager';
 import { store } from '../utils/store';
 import { DataSyncConfig, PatternSession } from '../utils/utils';
+import { extCommands } from '../utils/constants';
 
 export type CompareTreeItem = TreeItem & {
     parent?: CompareTreeItem;
@@ -74,7 +75,7 @@ export class CompareProvider implements TreeDataProvider<CompareTreeItem> {
         const treeItems: CompareTreeItem[] = [];
         tables.forEach((table) => {
             const countAffected: string[] = this.getCountAffected(session, table.name);
-            treeItems.push({
+            const treeItem: CompareTreeItem = {
                 id: table.name,
                 label: table.name,
                 description: countAffected.length <= 0 ? 'no changes' : countAffected.join(', '),
@@ -84,7 +85,13 @@ export class CompareProvider implements TreeDataProvider<CompareTreeItem> {
 
                 // Addition
                 tableName: table.name
-            });
+            };
+            treeItem.command = {
+                title: `Compare the table '${treeItem.tableName}'`,
+                command: extCommands.sideBySideDiff,
+                arguments: [treeItem]
+            };
+            treeItems.push(treeItem);
         });
         return treeItems;
     };
