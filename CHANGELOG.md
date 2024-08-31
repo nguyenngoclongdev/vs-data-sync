@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.30
+
+### Patch Changes
+
+- b98b1b4: bump version
+
 ## 1.0.29
 
 ### Patch Changes
