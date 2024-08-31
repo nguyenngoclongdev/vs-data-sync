@@ -1,5 +1,11 @@
 # data-sync
 
+## 1.0.28
+
+### Patch Changes
+
+- fbf3330: fix: allow click the tree item to compare or view migrate file
+
 ## 1.0.27
 
 ### Patch Changes
