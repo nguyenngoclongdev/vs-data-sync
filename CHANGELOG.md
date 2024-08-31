@@ -4,12 +4,6 @@
 
 ### Patch Changes
 
-- 2b71dfa: bump version
-
-## 1.0.28
-
-### Patch Changes
-
 - fbf3330: fix: allow click the tree item to compare or view migrate file
 
 ## 1.0.27
